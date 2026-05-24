@@ -43,9 +43,9 @@ export default function HomePage() {
 					{" · "}
 					Also try{" "}
 					<a
-						href="https://ideafast.pro?utm_source=channelmrr&utm_medium=footer"
+						href="https://www.ideafast.pro/?utm_source=channelmrr&utm_medium=footer"
 						target="_blank"
-						rel="noopener"
+						rel="noopener noreferrer"
 						className="underline hover:text-foreground"
 					>
 						IdeaFast

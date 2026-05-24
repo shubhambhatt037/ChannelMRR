@@ -3,9 +3,9 @@ import { ArrowRight, Sparkles } from "lucide-react";
 export default function TopBanner() {
 	return (
 		<a
-			href="https://ideafast.pro?utm_source=channelmrr&utm_medium=topbanner"
+			href="https://www.ideafast.pro/?utm_source=channelmrr&utm_medium=topbanner"
 			target="_blank"
-			rel="noopener"
+			rel="noopener noreferrer"
 			className="block w-full bg-primary/15 border-b border-primary/30 hover:bg-primary/20 transition group"
 		>
 			<div className="mx-auto max-w-6xl px-6 py-2.5 flex items-center justify-center gap-2 text-sm">

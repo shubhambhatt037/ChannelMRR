@@ -3,9 +3,9 @@ import { ArrowRight, Sparkles } from "lucide-react";
 export default function PromoCard() {
 	return (
 		<a
-			href="https://ideafast.pro?utm_source=channelmrr&utm_medium=promocard"
+			href="https://www.ideafast.pro/?utm_source=channelmrr&utm_medium=promocard"
 			target="_blank"
-			rel="noopener"
+			rel="noopener noreferrer"
 			className="block rounded-xl border border-border bg-gradient-to-br from-primary/10 via-card to-card hover:from-primary/15 transition group"
 		>
 			<div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
