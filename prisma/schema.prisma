@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/prisma"
@@ -14,75 +8,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime  @default(now())
-  has_access    Boolean   @default(false)
-  price_id      String?
-  customer_id   String?
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+model Startup {
+  slug                String   @id
+  name                String
+  icon                String?
+  description         String?
+  website             String?
+  country             String?
+  category            String?
+  targetAudience      String?
+  paymentProvider     String?
+  foundedDate         DateTime?
+  xHandle             String?
+  xFollowerCount      Int?
+  rank                Int?
+  mrr                 Float?
+  revenueTotal        Float?
+  revenueLast30Days   Float?
+  activeSubscriptions Int?
+  growth30d           Float?
+  growthMRR30d        Float?
+  onSale              Boolean  @default(false)
+  askingPrice         Float?
 
-  @@unique([email])
-  @@map("user")
+  marketingChannels   MarketingChannel[]
+  techStack           TechStack[]
+
+  detailFetchedAt     DateTime?
+  updatedAt           DateTime @updatedAt
+  createdAt           DateTime @default(now())
+
+  @@index([category])
+  @@index([targetAudience])
+  @@index([country])
+  @@index([mrr])
+  @@index([xHandle])
+  @@map("startup")
 }
 
-model Session {
-  id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime
-  updatedAt DateTime
-  ipAddress String?
-  userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model MarketingChannel {
+  id          Int     @id @default(autoincrement())
+  startupSlug String
+  slug        String
+  category    String?
 
-  @@unique([token])
-  @@map("session")
+  startup     Startup @relation(fields: [startupSlug], references: [slug], onDelete: Cascade)
+
+  @@unique([startupSlug, slug])
+  @@index([slug])
+  @@map("marketing_channel")
 }
 
-model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
-  createdAt             DateTime
-  updatedAt             DateTime
+model TechStack {
+  id          Int     @id @default(autoincrement())
+  startupSlug String
+  slug        String
+  category    String?
 
-  @@map("account")
+  startup     Startup @relation(fields: [startupSlug], references: [slug], onDelete: Cascade)
+
+  @@unique([startupSlug, slug])
+  @@index([slug])
+  @@map("tech_stack")
 }
 
-model Verification {
-  id         String    @id
-  identifier String
-  value      String
-  expiresAt  DateTime
-  createdAt  DateTime?
-  updatedAt  DateTime?
+model SyncState {
+  id                String   @id @default("singleton")
+  lastListSyncAt    DateTime?
+  lastDetailSyncAt  DateTime?
+  detailCursor      String?
+  totalStartups     Int      @default(0)
+  detailsFetched    Int      @default(0)
+  updatedAt         DateTime @updatedAt
 
-  @@map("verification")
-}
-
-model Waitlist {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  ip        String?
-  userAgent String?
-
-  @@map("waitlist")
+  @@map("sync_state")
 }

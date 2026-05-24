@@ -1,0 +1,6 @@
+{
+	"crons": [
+		{ "path": "/api/cron/sync?mode=incremental&batch=15", "schedule": "*/15 * * * *" },
+		{ "path": "/api/cron/sync?mode=list", "schedule": "0 6 * * *" }
+	]
+}

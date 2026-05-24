@@ -1,59 +1,48 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { headers } from "next/headers";
 
-export const rateLimiter = new Ratelimit({
-	redis: Redis.fromEnv(),
-	limiter: Ratelimit.slidingWindow(10, "10 s"),
-	analytics: true,
-});
-
-export const authRateLimiter = new Ratelimit({
-	redis: Redis.fromEnv(),
-	limiter: Ratelimit.slidingWindow(5, "30 m"),
-	analytics: true,
-});
-
-export const emailTokenRateLimiter = new Ratelimit({
-	redis: Redis.fromEnv(),
-	limiter: Ratelimit.slidingWindow(3, "30 m"),
-	analytics: true,
-});
-
-export const verifyEmailRateLimiter = new Ratelimit({
-	redis: Redis.fromEnv(),
-	limiter: Ratelimit.slidingWindow(3, "30 m"),
-	analytics: true,
-});
-
-type RateLimitProps = {
-	actionType: "auth" | "default" | "emailToken" | "verifyEmail";
-	identifier: string;
-};
-
-function getDynamicRateLimiter(
-	actionType: "auth" | "default" | "emailToken" | "verifyEmail",
-): Ratelimit {
-	switch (actionType) {
-		case "auth":
-			return authRateLimiter;
-		case "emailToken":
-			return emailTokenRateLimiter;
-		case "verifyEmail":
-			return verifyEmailRateLimiter;
-		default:
-			return rateLimiter;
+let redis: Redis | null = null;
+function getRedis() {
+	if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+		return null;
 	}
+	if (!redis) redis = Redis.fromEnv();
+	return redis;
 }
 
-export async function rateLimit({
-	actionType,
-	identifier,
-}: RateLimitProps): Promise<void> {
-	const rateLimiter = getDynamicRateLimiter(actionType);
-	const { success } = await rateLimiter.limit(identifier);
-
-	if (!success) {
-		throw new Error("Too many requests. Please try again later.");
+let apiLimiter: Ratelimit | null = null;
+function getApiLimiter() {
+	const r = getRedis();
+	if (!r) return null;
+	if (!apiLimiter) {
+		apiLimiter = new Ratelimit({
+			redis: r,
+			limiter: Ratelimit.slidingWindow(60, "60 s"),
+			analytics: true,
+			prefix: "rl:api",
+		});
 	}
+	return apiLimiter;
+}
+
+export async function enforceApiRateLimit(identifier: string): Promise<{
+	ok: boolean;
+	limit: number;
+	remaining: number;
+	reset: number;
+}> {
+	const limiter = getApiLimiter();
+	if (!limiter) {
+		return { ok: true, limit: 0, remaining: 0, reset: 0 };
+	}
+	const { success, limit, remaining, reset } = await limiter.limit(identifier);
+	return { ok: success, limit, remaining, reset };
+}
+
+export function getClientIdentifier(req: Request): string {
+	const fwd = req.headers.get("x-forwarded-for");
+	if (fwd) return fwd.split(",")[0].trim();
+	const real = req.headers.get("x-real-ip");
+	if (real) return real;
+	return "anonymous";
 }

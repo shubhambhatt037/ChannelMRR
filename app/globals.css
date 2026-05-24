@@ -1,8 +1,43 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "./index.css";
 
 @custom-variant dark (&:is(.dark *));
+
+:root {
+	--background: #000000;
+	--foreground: #ededed;
+	--card: #0a0a0a;
+	--card-foreground: #ededed;
+	--popover: #0a0a0a;
+	--popover-foreground: #ededed;
+	--primary: #818cf8;
+	--primary-foreground: #0a0a0a;
+	--secondary: #18181b;
+	--secondary-foreground: #ededed;
+	--muted: #18181b;
+	--muted-foreground: #a1a1aa;
+	--accent: #1f1f23;
+	--accent-foreground: #ededed;
+	--destructive: #ef4444;
+	--destructive-foreground: #ededed;
+	--border: #27272a;
+	--input: #18181b;
+	--ring: #818cf8;
+	--radius: 0.5rem;
+	--chart-1: #818cf8;
+	--chart-2: #22c55e;
+	--chart-3: #f59e0b;
+	--chart-4: #ef4444;
+	--chart-5: #06b6d4;
+	--sidebar: #0a0a0a;
+	--sidebar-foreground: #ededed;
+	--sidebar-primary: #818cf8;
+	--sidebar-primary-foreground: #0a0a0a;
+	--sidebar-accent: #1f1f23;
+	--sidebar-accent-foreground: #ededed;
+	--sidebar-border: #27272a;
+	--sidebar-ring: #818cf8;
+}
 
 @theme inline {
 	--color-background: var(--background);

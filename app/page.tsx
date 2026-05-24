@@ -1,53 +1,27 @@
-"use client";
-
-import Header from "@/components/common/Header";
-import Hero from "@/components/common/Hero";
-import CustomerAvatars from "@/components/common/CustomerAvatars";
-import FeatureGrid from "@/components/common/FeatureGrid";
-import InteractiveFeatures from "@/components/common/InteractiveFeatures";
-import TestimonialHero from "@/components/common/TestimonialHero";
-import TestimonialGrid from "@/components/common/TestimonialGrid";
-import Pricing from "@/components/common/Pricing";
-import CallToAction from "@/components/common/CallToAction";
-import FAQ from "@/components/common/FAQ";
-import Footer from "@/components/common/Footer";
-import { Suspense } from "react";
+import ChannelExplorer from "@/components/explorer/ChannelExplorer";
+import { Star } from "lucide-react";
 
 export default function HomePage() {
 	return (
-		<div className="min-h-screen bg-background">
-			<Suspense fallback={<div>Loading...</div>}>
-				<Header />
-			</Suspense>
-
-			<main id="main-content" role="main">
-				<Hero />
-
-				{/* Social Proof Section */}
-				<section
-					className="py-16 bg-card/50"
-					aria-label="Social proof and customer testimonials"
-				>
-					<div className="mx-auto max-w-7xl px-6 lg:px-8">
-						<div className="mx-auto max-w-2xl text-center">
-							<p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-8">
-								Trusted by 500+ developers
-							</p>
-							<CustomerAvatars priority />
-						</div>
+		<div className="min-h-screen bg-background text-foreground">
+			<main className="mx-auto max-w-6xl px-6 pt-12 pb-24">
+				<header className="text-center mb-12">
+					<div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-6">
+						<Star className="size-4 fill-primary text-primary" />
+						<span className="font-semibold">ChannelMRR</span>
 					</div>
-				</section>
+					<h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+						The marketing channels
+						<br /> behind verified startup revenue
+					</h1>
+					<p className="mt-5 text-muted-foreground max-w-2xl mx-auto">
+						Filter ~7,000 startups from TrustMRR by revenue, market, audience, country or
+						founder — see exactly which channels they use, ranked by frequency.
+					</p>
+				</header>
 
-				<FeatureGrid />
-				<InteractiveFeatures />
-				<TestimonialHero />
-				<TestimonialGrid />
-				<Pricing />
-				<FAQ />
-				<CallToAction />
+				<ChannelExplorer />
 			</main>
-
-			<Footer />
 		</div>
 	);
 }

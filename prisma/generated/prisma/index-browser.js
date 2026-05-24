@@ -21,11 +21,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.19.2
+ * Prisma Client JS version: 6.19.3
  * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 Prisma.prismaVersion = {
-  client: "6.19.2",
+  client: "6.19.3",
   engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
@@ -121,61 +121,55 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
+exports.Prisma.StartupScalarFieldEnum = {
+  slug: 'slug',
   name: 'name',
-  email: 'email',
-  emailVerified: 'emailVerified',
-  image: 'image',
-  createdAt: 'createdAt',
-  has_access: 'has_access',
-  price_id: 'price_id',
-  customer_id: 'customer_id',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SessionScalarFieldEnum = {
-  id: 'id',
-  expiresAt: 'expiresAt',
-  token: 'token',
-  createdAt: 'createdAt',
+  icon: 'icon',
+  description: 'description',
+  website: 'website',
+  country: 'country',
+  category: 'category',
+  targetAudience: 'targetAudience',
+  paymentProvider: 'paymentProvider',
+  foundedDate: 'foundedDate',
+  xHandle: 'xHandle',
+  xFollowerCount: 'xFollowerCount',
+  rank: 'rank',
+  mrr: 'mrr',
+  revenueTotal: 'revenueTotal',
+  revenueLast30Days: 'revenueLast30Days',
+  activeSubscriptions: 'activeSubscriptions',
+  growth30d: 'growth30d',
+  growthMRR30d: 'growthMRR30d',
+  onSale: 'onSale',
+  askingPrice: 'askingPrice',
+  detailFetchedAt: 'detailFetchedAt',
   updatedAt: 'updatedAt',
-  ipAddress: 'ipAddress',
-  userAgent: 'userAgent',
-  userId: 'userId'
+  createdAt: 'createdAt'
 };
 
-exports.Prisma.AccountScalarFieldEnum = {
+exports.Prisma.MarketingChannelScalarFieldEnum = {
   id: 'id',
-  accountId: 'accountId',
-  providerId: 'providerId',
-  userId: 'userId',
-  accessToken: 'accessToken',
-  refreshToken: 'refreshToken',
-  idToken: 'idToken',
-  accessTokenExpiresAt: 'accessTokenExpiresAt',
-  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
-  scope: 'scope',
-  password: 'password',
-  createdAt: 'createdAt',
+  startupSlug: 'startupSlug',
+  slug: 'slug',
+  category: 'category'
+};
+
+exports.Prisma.TechStackScalarFieldEnum = {
+  id: 'id',
+  startupSlug: 'startupSlug',
+  slug: 'slug',
+  category: 'category'
+};
+
+exports.Prisma.SyncStateScalarFieldEnum = {
+  id: 'id',
+  lastListSyncAt: 'lastListSyncAt',
+  lastDetailSyncAt: 'lastDetailSyncAt',
+  detailCursor: 'detailCursor',
+  totalStartups: 'totalStartups',
+  detailsFetched: 'detailsFetched',
   updatedAt: 'updatedAt'
-};
-
-exports.Prisma.VerificationScalarFieldEnum = {
-  id: 'id',
-  identifier: 'identifier',
-  value: 'value',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.WaitlistScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  createdAt: 'createdAt',
-  ip: 'ip',
-  userAgent: 'userAgent'
 };
 
 exports.Prisma.SortOrder = {
@@ -195,11 +189,10 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Session: 'Session',
-  Account: 'Account',
-  Verification: 'Verification',
-  Waitlist: 'Waitlist'
+  Startup: 'Startup',
+  MarketingChannel: 'MarketingChannel',
+  TechStack: 'TechStack',
+  SyncState: 'SyncState'
 };
 
 /**
